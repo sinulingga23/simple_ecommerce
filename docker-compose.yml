@@ -12,11 +12,22 @@ services:
       - 5432:5432
     networks:
       - ecommerce
+
   usersservice:
     build:
       context: ./usersservice
     ports:
       - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - ecommerce
+    
+  productservice:
+    build:
+      context: ./productsservice
+    ports:
+      - 8081:8081
     depends_on:
       - db
     networks:
