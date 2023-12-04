@@ -1,0 +1,32 @@
+package app.sinulingga.usersservice.controller;
+
+import app.sinulingga.usersservice.dto.AddUserRequest;
+import app.sinulingga.usersservice.dto.ResponseBasic;
+import app.sinulingga.usersservice.exception.BadRequestException;
+import app.sinulingga.usersservice.service.UserService;
+import app.sinulingga.usersservice.utility.ResponseHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/users-service/api/v1")
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping(value = "/users")
+    public ResponseEntity<ResponseBasic> add(@RequestBody AddUserRequest request) {
+        try {
+            userService.add(request);
+            return ResponseHelper.createResponse(HttpStatus.OK, "Success");
+        } catch (BadRequestException e) {
+            return ResponseHelper.createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+}

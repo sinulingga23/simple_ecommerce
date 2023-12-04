@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    build:
+      context: ./custom-db
+    environment:
+      POSTGRES_DB: simple_ecommerce
+      POSTGRES_USER: dennyrezky
+      POSTGRES_PASSWORD: Password12346
+    ports:
+      - 5432:5432
+    networks:
+      - ecommerce
+  usersservice:
+    build:
+      context: ./usersservice
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - ecommerce
+
+networks:
+ ecommerce:
+  driver: bridge
