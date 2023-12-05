@@ -33,6 +33,16 @@ services:
     networks:
       - ecommerce
 
+  transactionsservice:
+    build:
+      context: ./transactionservice
+    ports:
+      - 8082:8082
+    depends_on:
+      - db
+    networks:
+      - ecommerce
+
 networks:
  ecommerce:
   driver: bridge
