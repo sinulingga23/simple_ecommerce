@@ -1,5 +1,6 @@
 package app.sinulingga.productsservice.service.impl;
 
+import app.sinulingga.productsservice.dto.AddCategoriesRequest;
 import app.sinulingga.productsservice.dto.AddCategoryRequest;
 import app.sinulingga.productsservice.entity.Category;
 import app.sinulingga.productsservice.exception.BadRequestException;
@@ -22,17 +23,17 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public void addCategories(List<AddCategoryRequest> request) throws BadRequestException {
+    public void addCategories(AddCategoriesRequest request) throws BadRequestException {
         try {
-            if (Validator.isEmpty(request))
+            if (Validator.isEmpty(request.getCategories()))
                 throw new BadRequestException("Categories Empty");
 
-            for (AddCategoryRequest item : request)
+            for (AddCategoryRequest item : request.getCategories())
                 if (Validator.isEmpty(item) || Validator.isEmpty(item.getName()))
                     throw new BadRequestException("Name Empty");
 
             List<Category> categories = new ArrayList<>();
-            request.forEach(item -> {
+            request.getCategories().forEach(item -> {
                 Category category = new Category();
                 category.setId(UUID.randomUUID());
                 category.setName(item.getName().trim());
