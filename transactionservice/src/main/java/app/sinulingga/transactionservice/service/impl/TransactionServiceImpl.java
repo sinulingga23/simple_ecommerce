@@ -4,10 +4,7 @@ import app.sinulingga.transactionservice.definition.StatusPayment;
 import app.sinulingga.transactionservice.dto.AddOrderRequest;
 import app.sinulingga.transactionservice.dto.InquiryPaymentRequest;
 import app.sinulingga.transactionservice.dto.OrderRequest;
-import app.sinulingga.transactionservice.entity.Product;
-import app.sinulingga.transactionservice.entity.Transaction;
-import app.sinulingga.transactionservice.entity.TransactionDetail;
-import app.sinulingga.transactionservice.entity.User;
+import app.sinulingga.transactionservice.entity.*;
 import app.sinulingga.transactionservice.exception.BadRequestException;
 import app.sinulingga.transactionservice.exception.DataNotFoundException;
 import app.sinulingga.transactionservice.repository.ProductRepository;
@@ -147,6 +144,34 @@ public class TransactionServiceImpl implements TransactionService  {
             throw e;
         } catch (Exception e) {
             e.getStackTrace();
+            throw new BadRequestException(e.getClass().getSimpleName());
+        }
+    }
+
+    @Override
+    public Set<TransactionResponse> findAll() throws BadRequestException, DataNotFoundException {
+        try {
+            List<Transaction> listTransaction = transactionRepository.findAll();
+            if (listTransaction.isEmpty())
+                throw new DataNotFoundException("Data Not Found");
+
+            Set<TransactionResponse> response = new HashSet<>();
+            for (Transaction transaction : listTransaction) {
+                TransactionResponse transactionResponse = new TransactionResponse();
+                transactionResponse.setId(transaction.getId().toString());
+                transactionResponse.setTransactionTime(transaction.getTransactionTime());
+                transactionResponse.setStatusPayment(transaction.getStatusPayment());
+                transactionResponse.setTotalPayment(transaction.getTotalPayment());
+                if (transaction.getUser() != null) {
+                    transactionResponse.setUserId(transaction.getUser().getId().toString());
+                }
+                response.add(transactionResponse);
+            }
+
+            return response;
+        } catch (DataNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
             throw new BadRequestException(e.getClass().getSimpleName());
         }
     }
