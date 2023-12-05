@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 public class Validator {
     public static boolean isEmpty(Object object) {
         if (object == null) return true;
-        if (object instanceof BigDecimal && object == null) return true;
         if (object instanceof List<?> && ((List<?>) object).isEmpty()) return true;
         if (object instanceof Set<?> && ((Set<?>) object).isEmpty()) return  true;
         if (object instanceof String && (((String) object).trim().isEmpty())) return true;
