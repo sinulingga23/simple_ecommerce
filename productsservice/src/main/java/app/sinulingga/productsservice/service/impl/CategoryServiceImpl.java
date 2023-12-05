@@ -2,8 +2,10 @@ package app.sinulingga.productsservice.service.impl;
 
 import app.sinulingga.productsservice.dto.AddCategoriesRequest;
 import app.sinulingga.productsservice.dto.AddCategoryRequest;
+import app.sinulingga.productsservice.dto.CategoryResponse;
 import app.sinulingga.productsservice.entity.Category;
 import app.sinulingga.productsservice.exception.BadRequestException;
+import app.sinulingga.productsservice.exception.DataNotFoundException;
 import app.sinulingga.productsservice.repository.CategoryRepository;
 import app.sinulingga.productsservice.service.CategoryService;
 import app.sinulingga.productsservice.utility.Validator;
@@ -52,5 +54,21 @@ public class CategoryServiceImpl implements CategoryService {
             log.info("Exception: "  + e.getMessage());
             throw new BadRequestException(e.getClass().getSimpleName());
         }
+    }
+
+    @Override
+    public Set<CategoryResponse> findAll() throws DataNotFoundException {
+        List<Category> listCategory = categoryRepository.findAll();
+        if (listCategory.isEmpty())
+            throw new DataNotFoundException("Data Not Found");
+
+        Set<CategoryResponse> categories = new HashSet<>();
+        for (Category category : listCategory) {
+            CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setId(category.getId().toString());
+            categoryResponse.setName(category.getName());
+            categories.add(categoryResponse);
+        }
+        return categories;
     }
 }
