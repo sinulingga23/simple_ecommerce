@@ -1,8 +1,10 @@
 package app.sinulingga.usersservice.service.impl;
 
 import app.sinulingga.usersservice.dto.AddUserRequest;
+import app.sinulingga.usersservice.dto.UserResponse;
 import app.sinulingga.usersservice.entity.User;
 import app.sinulingga.usersservice.exception.BadRequestException;
+import app.sinulingga.usersservice.exception.DataNotFoundException;
 import app.sinulingga.usersservice.repository.UserRepository;
 import app.sinulingga.usersservice.service.UserService;
 import app.sinulingga.usersservice.utility.Validator;
@@ -12,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -55,6 +60,29 @@ public class UserServiceImpl implements UserService {
             log.info("Unexpected Error: " + e.getMessage());
             e.getStackTrace();
             throw new BadRequestException(e.getClass().getSimpleName());
+        }
+    }
+
+    @Override
+    public Set<UserResponse> findAll() throws  DataNotFoundException {
+        try {
+            List<User> listUser = userRepository.findAll();
+            if (listUser.isEmpty())
+                throw new DataNotFoundException("Data Not Found");
+
+            Set<UserResponse> users = new HashSet<>();
+            for (User user : listUser) {
+                UserResponse userResponse = new UserResponse();
+                userResponse.setId(user.getId().toString());
+                userResponse.setFullName(user.getFullName());
+                userResponse.setPhoneNumber(user.getPhoneNumber());
+                userResponse.setEmail(user.getEmail());
+                users.add(userResponse);
+            }
+
+            return users;
+        } catch (DataNotFoundException e) {
+            throw e;
         }
     }
 }

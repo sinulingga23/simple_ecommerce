@@ -63,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService  {
 
             Set<Product> products = productRepository.findByIdIn(productIds);
             if (products == null || (products.size() != productIds.size()))
-                throw new DataNotFoundException("Data Product Empty");
+                throw new DataNotFoundException("Data Not Found");
 
             Map<String, Product> mapProduct = new HashMap<>();
             for (Product product : products) {
