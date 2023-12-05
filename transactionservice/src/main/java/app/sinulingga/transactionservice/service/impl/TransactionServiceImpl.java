@@ -2,6 +2,7 @@ package app.sinulingga.transactionservice.service.impl;
 
 import app.sinulingga.transactionservice.definition.StatusPayment;
 import app.sinulingga.transactionservice.dto.AddOrderRequest;
+import app.sinulingga.transactionservice.dto.InquiryPaymentRequest;
 import app.sinulingga.transactionservice.dto.OrderRequest;
 import app.sinulingga.transactionservice.entity.Product;
 import app.sinulingga.transactionservice.entity.Transaction;
@@ -25,6 +26,7 @@ import java.util.*;
 
 @Service
 public class TransactionServiceImpl implements TransactionService  {
+    private static final int INSUFFICIENT_AMOUNT = 0;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -67,13 +69,11 @@ public class TransactionServiceImpl implements TransactionService  {
                 throw new DataNotFoundException("Data Product Empty");
 
             Map<String, Product> mapProduct = new HashMap<>();
-            BigDecimal totalPayment = BigDecimal.ZERO;
             for (Product product : products) {
-                totalPayment = totalPayment.add(product.getPrice());
                 mapProduct.put(product.getId().toString(), product);
             }
 
-
+            BigDecimal totalPayment = BigDecimal.ZERO;
             for (OrderRequest orderRequest : request.getOrders()) {
                 Product product = mapProduct.get(orderRequest.getProductId());
 
@@ -83,6 +83,7 @@ public class TransactionServiceImpl implements TransactionService  {
 
                 product.setQtty(product.getQtty()-orderRequest.getQtty());
                 productRepository.save(product);
+                totalPayment  = totalPayment.add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
             }
 
 
@@ -112,6 +113,41 @@ public class TransactionServiceImpl implements TransactionService  {
             throw new BadRequestException("Id Invalid");
         } catch (BadRequestException | DataNotFoundException e) {
             throw e;
+        } catch (Exception e) {
+            e.getStackTrace();
+            throw new BadRequestException(e.getClass().getSimpleName());
+        }
+    }
+
+    @Transactional
+    @Override
+    public void inquiryPayment(InquiryPaymentRequest request) throws BadRequestException, DataNotFoundException {
+        try {
+            if (Validator.isEmpty(request.getOrderId()))
+                throw new BadRequestException("Order Id Empty");
+            if (Validator.isEmpty(request.getAmount()))
+                throw new BadRequestException("Amount empty");
+
+            UUID orderId = UUID.fromString(request.getOrderId());
+            Optional<Transaction> optional = transactionRepository.findById(orderId);
+            if (optional.isEmpty())
+                throw new DataNotFoundException("Data Not Found");
+
+            Transaction transaction = optional.get();
+            if (request.getAmount().subtract(transaction.getTotalPayment()).signum() < INSUFFICIENT_AMOUNT)
+                throw new BadRequestException("Insufficient Amount");
+
+            transaction.setStatusPayment(StatusPayment.PAID);
+
+            transactionRepository.save(transaction);
+
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Id Invalid");
+        } catch (BadRequestException  | DataNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            e.getStackTrace();
+            throw new BadRequestException(e.getClass().getSimpleName());
         }
     }
 }

@@ -1,6 +1,7 @@
 package app.sinulingga.transactionservice.controller;
 
 import app.sinulingga.transactionservice.dto.AddOrderRequest;
+import app.sinulingga.transactionservice.dto.InquiryPaymentRequest;
 import app.sinulingga.transactionservice.dto.ResponseBasic;
 import app.sinulingga.transactionservice.exception.BadRequestException;
 import app.sinulingga.transactionservice.exception.DataNotFoundException;
@@ -25,6 +26,18 @@ public class TransactionController {
     public ResponseEntity<ResponseBasic> createOrder(@RequestBody AddOrderRequest request) {
         try {
             transactionService.createOrder(request);
+            return ResponseHelper.createResponse(HttpStatus.OK, "Success");
+        } catch (BadRequestException e) {
+            return ResponseHelper.createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (DataNotFoundException e) {
+            return ResponseHelper.createResponse(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @PostMapping("/inquiry-payment")
+    public ResponseEntity<ResponseBasic> inquiryPayment(@RequestBody InquiryPaymentRequest request) {
+        try {
+            transactionService.inquiryPayment(request);
             return ResponseHelper.createResponse(HttpStatus.OK, "Success");
         } catch (BadRequestException e) {
             return ResponseHelper.createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
