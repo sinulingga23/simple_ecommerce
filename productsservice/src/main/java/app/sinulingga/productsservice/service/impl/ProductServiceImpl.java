@@ -46,8 +46,12 @@ public class ProductServiceImpl implements ProductService  {
                 throw new BadRequestException("Qtty Empty");
             if (Validator.isEmpty(request.getCategories()))
                 throw new BadRequestException("Categories Empty");
+            if (Validator.isEmpty(request.getPrice()))
+                throw new BadRequestException("Prince can't empty");
             if (request.getQtty() <= 0)
                 throw new BadRequestException("Qtty can't zero or minus.");
+            if (request.getPrice().signum() == 0 || request.getPrice().signum() == -1)
+                throw new BadRequestException("Price can't zero or minus.");
 
             Set<UUID> listCategoryId = new HashSet<>();
             request.getCategories().forEach(item -> {
@@ -64,6 +68,7 @@ public class ProductServiceImpl implements ProductService  {
             product.setName(request.getName().trim());
             product.setDescription(request.getDescription().trim());
             product.setQtty(request.getQtty());
+            product.setPrice(request.getPrice());
             product.setCreatedAt(LocalDateTime.now());
             product.setCreatedBy("System");
 
@@ -105,6 +110,7 @@ public class ProductServiceImpl implements ProductService  {
             productResponse.setName(item.getName());
             productResponse.setQtty(item.getQtty());
             productResponse.setDescription(item.getDescription());
+            productResponse.setPrice(item.getPrice());
 
             if (item.getCategories() != null && !item.getCategories().isEmpty()) {
 

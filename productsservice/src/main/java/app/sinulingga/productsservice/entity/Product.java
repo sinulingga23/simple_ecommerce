@@ -2,6 +2,7 @@ package app.sinulingga.productsservice.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,6 +19,9 @@ public class Product extends BaseEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 
     @Column(name = "qtty", nullable = false)
     private Long qtty;
@@ -73,6 +77,14 @@ public class Product extends BaseEntity {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override

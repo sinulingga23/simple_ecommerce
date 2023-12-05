@@ -2,17 +2,19 @@ package app.sinulingga.productsservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @JsonPropertyOrder({
         "id", "name", "description",
-        "qtty","categories"
+        "qtty","price", "categories"
 })
 public class ProductResponse {
     private String id;
     private String name;
     private String description;
     private Long qtty;
+    private BigDecimal price;
     private Set<String> categories;
 
     public ProductResponse() {
@@ -51,6 +53,14 @@ public class ProductResponse {
         this.qtty = qtty;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     public Set<String> getCategories() {
         return categories;
     }
@@ -66,6 +76,7 @@ public class ProductResponse {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", qtty=" + qtty +
+                ", price=" + price +
                 '}';
     }
 }

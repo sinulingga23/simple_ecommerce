@@ -1,11 +1,13 @@
 package app.sinulingga.productsservice.dto;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 public class AddProductRequest {
     private String name;
     private String description;
     private Long qtty;
+    private BigDecimal price;
     private Set<String> categories;
 
     public AddProductRequest() {
@@ -34,6 +36,14 @@ public class AddProductRequest {
 
     public void setQtty(Long qtty) {
         this.qtty = qtty;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Set<String> getCategories() {
