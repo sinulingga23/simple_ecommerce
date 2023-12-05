@@ -17,7 +17,7 @@ public class Transaction extends BaseEntity {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @Column(name = "status_payment", length = 100, nullable = true)

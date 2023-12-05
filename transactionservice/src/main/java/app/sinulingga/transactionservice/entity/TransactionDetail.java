@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Table(schema = "transactions", name = "transactions_detail")
 @Entity(name = "transactions_detail")
-public class TransactionDetail extends BaseEntity {
+public class TransactionDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column
