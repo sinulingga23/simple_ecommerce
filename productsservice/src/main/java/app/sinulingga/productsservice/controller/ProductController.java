@@ -61,4 +61,16 @@ public class ProductController {
             return ResponseHelper.createResponse(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
+    @PutMapping(value = "/deduct-qty")
+    public ResponseEntity<ResponseBasic> deductQty(@RequestBody DeductQtyRequest request) {
+        try {
+            productService.deductQty(request.getProductId(), request.getQty());
+            return ResponseHelper.createResponse(HttpStatus.OK, "Success");
+        } catch (BadRequestException e) {
+            return ResponseHelper.createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (DataNotFoundException e) {
+            return ResponseHelper.createResponse(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 }

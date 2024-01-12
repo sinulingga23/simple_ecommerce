@@ -14,4 +14,6 @@ public interface ProductService {
             throws BadRequestException, DataNotFoundException;
     ResponsePagination findAll(ListProductRequest request)
         throws BadRequestException, DataNotFoundException;
+    void deductQty(String productId, Long qty)
+            throws BadRequestException, DataNotFoundException;
 }

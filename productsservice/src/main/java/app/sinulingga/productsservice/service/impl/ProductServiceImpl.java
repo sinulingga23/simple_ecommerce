@@ -19,15 +19,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService  {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private static final int INSUFFICIENT_QTY = 0;
 
     @Autowired
     private ProductRepository productRepository;
@@ -132,5 +132,38 @@ public class ProductServiceImpl implements ProductService  {
         responsePagination.setTotalPage(listPageProduct.getTotalPages());
 
         return responsePagination;
+    }
+
+    @Transactional
+    @Override
+    public void deductQty(String productId, Long qty)
+            throws BadRequestException, DataNotFoundException {
+        try {
+            UUID productUUID = UUID.fromString(productId);
+
+            if (Objects.isNull(qty) || qty <= -1) {
+                throw new BadRequestException("Qty can't minus or zero");
+            }
+
+            Optional<Product> optional = productRepository.findById(productUUID);
+            if (optional.isEmpty()) {
+                throw new DataNotFoundException("Data Not Found");
+            }
+
+            Product product = optional.get();
+            if (product.getQtty().compareTo(qty) < INSUFFICIENT_QTY) {
+                throw new BadRequestException("Insufficient Qty");
+            }
+
+            product.setQtty(product.getQtty()-qty);
+
+            productRepository.save(product);
+        }catch (IllegalArgumentException e) {
+            throw new BadRequestException(e.getMessage());
+        } catch (BadRequestException | DataNotFoundException e) {
+            throw e;
+        } catch (Exception e){
+            throw new BadRequestException(e.getClass().getSimpleName());
+        }
     }
 }
