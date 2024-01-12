@@ -1,9 +1,11 @@
 package app.sinulingga.transactionservice.service.impl;
 
+import app.sinulingga.transactionservice.component.KafkaProducer;
 import app.sinulingga.transactionservice.definition.StatusPayment;
 import app.sinulingga.transactionservice.dto.AddOrderRequest;
 import app.sinulingga.transactionservice.dto.InquiryPaymentRequest;
 import app.sinulingga.transactionservice.dto.OrderRequest;
+import app.sinulingga.transactionservice.dto.ProductServiceDeductQtyRequest;
 import app.sinulingga.transactionservice.entity.*;
 import app.sinulingga.transactionservice.exception.BadRequestException;
 import app.sinulingga.transactionservice.exception.DataNotFoundException;
@@ -13,16 +15,23 @@ import app.sinulingga.transactionservice.repository.TransactionRepository;
 import app.sinulingga.transactionservice.repository.UserRepository;
 import app.sinulingga.transactionservice.service.TransactionService;
 import app.sinulingga.transactionservice.utility.Validator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService  {
+    private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
     private static final int INSUFFICIENT_AMOUNT = 0;
 
     @Autowired
@@ -36,6 +45,12 @@ public class TransactionServiceImpl implements TransactionService  {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
+    @Value(value = "${product.service.deduct.qty}")
+    private String topicProductServiceDeductQty;
 
     @Transactional
     @Override
@@ -78,17 +93,18 @@ public class TransactionServiceImpl implements TransactionService  {
                     throw new BadRequestException("Insufficient Qtty");
                 }
 
-                product.setQtty(product.getQtty()-orderRequest.getQtty());
-                productRepository.save(product);
+//                product.setQtty(product.getQtty()-orderRequest.getQtty());
+//                productRepository.save(product);
                 totalPayment  = totalPayment.add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
 
 
                 // Send an event to message broker
-                /*
-                    TOPIC: product-service:deduct-qty-product
-                    MESSAGE: ProductId, QTY
-                 */
-                
+                ProductServiceDeductQtyRequest productServiceDeductQtyRequest = new ProductServiceDeductQtyRequest();
+                productServiceDeductQtyRequest.setProductId(product.getId().toString());
+                productServiceDeductQtyRequest.setQty(orderRequest.getQtty());
+                ObjectMapper objectMapper = new ObjectMapper();
+                String message = objectMapper.writeValueAsString(productServiceDeductQtyRequest);
+                kafkaProducer.sendMessage(topicProductServiceDeductQty, message);
             }
 
 
@@ -119,6 +135,7 @@ public class TransactionServiceImpl implements TransactionService  {
         } catch (BadRequestException | DataNotFoundException e) {
             throw e;
         } catch (Exception e) {
+            log.info(String.format("Exception: %s, message: %s", e.getClass().getSimpleName(), e.getMessage()));
             e.getStackTrace();
             throw new BadRequestException(e.getClass().getSimpleName());
         }

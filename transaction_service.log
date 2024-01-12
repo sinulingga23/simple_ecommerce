@@ -1,0 +1,323 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2024-01-12T10:19:20.266Z  INFO 1 --- [           main] a.s.t.TransactionserviceApplication      : Starting TransactionserviceApplication v0.0.1-SNAPSHOT using Java 17.0.9 with PID 1 (/app/transactionservice-0.0.1.jar started by root in /app)
+2024-01-12T10:19:20.270Z  INFO 1 --- [           main] a.s.t.TransactionserviceApplication      : No active profile set, falling back to 1 default profile: "default"
+2024-01-12T10:19:21.004Z  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-12T10:19:21.067Z  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 4 JPA repository interfaces.
+2024-01-12T10:19:21.613Z  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2024-01-12T10:19:21.620Z  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-12T10:19:21.621Z  INFO 1 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-01-12T10:19:21.652Z  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-01-12T10:19:21.653Z  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1234 ms
+2024-01-12T10:19:21.796Z  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-12T10:19:21.854Z  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2024-01-12T10:19:21.889Z  INFO 1 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-01-12T10:19:22.054Z  INFO 1 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-12T10:19:22.092Z  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-12T10:19:22.237Z  INFO 1 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@489110c2
+2024-01-12T10:19:22.239Z  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-12T10:19:22.261Z  WARN 1 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-12T10:19:22.795Z  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-12T10:19:22.797Z  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-12T10:19:23.107Z  INFO 1 --- [           main] a.s.t.configuration.KafkaConfiguration   : Bootstrap Server Kafka: kafka:29092
+2024-01-12T10:19:23.194Z  WARN 1 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-12T10:19:23.604Z  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2024-01-12T10:19:23.614Z  INFO 1 --- [           main] a.s.t.TransactionserviceApplication      : Started TransactionserviceApplication in 3.69 seconds (process running for 4.215)
+2024-01-12T10:19:37.218Z  INFO 1 --- [nio-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-12T10:19:37.221Z  INFO 1 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-01-12T10:19:37.229Z  INFO 1 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.created_by,u1_0.email,u1_0.full_name,u1_0.phone_number,u1_0.updated_at,u1_0.updated_by from public.users u1_0 where u1_0.id=?
+Hibernate: select p1_0.id,p1_0.created_at,p1_0.created_by,p1_0.description,p1_0.name,p1_0.price,p1_0.qtty,p1_0.updated_at,p1_0.updated_by from products.products p1_0 where p1_0.id in (?)
+2024-01-12T10:19:37.577Z  INFO 1 --- [nio-8082-exec-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [kafka:29092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+2024-01-12T10:19:37.639Z  INFO 1 --- [nio-8082-exec-2] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Instantiated an idempotent producer.
+2024-01-12T10:19:37.675Z  INFO 1 --- [nio-8082-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.0
+2024-01-12T10:19:37.676Z  INFO 1 --- [nio-8082-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 60e845626d8a465a
+2024-01-12T10:19:37.676Z  INFO 1 --- [nio-8082-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1705054777672
+2024-01-12T10:19:37.962Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Error while fetching metadata with correlation id 1 : {product-service-deduct-qty=LEADER_NOT_AVAILABLE}
+2024-01-12T10:19:37.963Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: viT1Y6hBRLOe83wn7uKY5Q
+2024-01-12T10:19:38.005Z  INFO 1 --- [ad | producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=producer-1] ProducerId set to 0 with epoch 0
+2024-01-12T10:19:38.063Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:38.064Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:38.170Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:38.170Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:38.278Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:38.279Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:38.547Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:38.548Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:38.927Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:38.930Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:39.614Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:39.616Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:40.718Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:40.718Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:41.880Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:41.881Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:42.740Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:42.741Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:43.790Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:43.791Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:44.983Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:44.984Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:45.924Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:45.926Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:47.023Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:47.023Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:48.019Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:48.020Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:48.864Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:48.865Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:49.861Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:49.862Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:50.697Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:50.698Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:51.872Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:51.872Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:52.840Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:52.841Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:53.751Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:53.751Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:54.666Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:54.669Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:55.743Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:55.744Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:56.879Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:56.881Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:58.075Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:58.075Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:19:59.161Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:19:59.161Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:00.300Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:00.301Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:01.337Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:01.338Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:02.439Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:02.440Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:03.585Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:03.586Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:04.645Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:04.647Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:05.862Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:05.864Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:06.879Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:06.880Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:07.791Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:07.792Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:08.651Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:08.652Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:09.864Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:09.865Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:11.078Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:11.079Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:11.915Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:11.916Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:12.826Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:12.828Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:13.726Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:13.728Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:14.558Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:14.559Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:15.561Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:15.561Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:16.455Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:16.456Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:17.522Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:17.522Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:18.475Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:18.476Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:19.369Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:19.370Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:20.524Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:20.525Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:21.720Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:21.721Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:22.924Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:22.925Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:23.879Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:23.880Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:25.033Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:25.034Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:26.157Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:26.158Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:27.195Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:27.196Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:28.007Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:28.008Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:29.078Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:29.079Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:30.248Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:30.249Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:31.236Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:31.236Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:32.222Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:32.223Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:33.374Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:33.375Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:34.370Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:34.371Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:35.271Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:35.271Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:36.324Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:36.326Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:37.154Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:37.154Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:37.708Z ERROR 1 --- [nio-8082-exec-2] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='null' and payload='{"productId":"1fbb4f51-1aaf-4eb6-a003-df2fb02a960f","qty":3}' to topic product-service-deduct-qty:
+
+org.apache.kafka.common.errors.TimeoutException: Topic product-service-deduct-qty not present in metadata after 60000 ms.
+
+2024-01-12T10:20:37.728Z  INFO 1 --- [nio-8082-exec-2] a.s.t.s.impl.TransactionServiceImpl      : Exception: KafkaException, message: Send failed
+2024-01-12T10:20:38.246Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:38.248Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:39.495Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:39.496Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:40.642Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:40.643Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:41.662Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:41.663Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:42.671Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:42.672Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:43.730Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:43.730Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:44.722Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:44.723Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:45.710Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:45.711Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:46.792Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:46.792Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:47.893Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:47.894Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:48.983Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:48.983Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:50.019Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:50.020Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:51.168Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:51.169Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:52.157Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:52.158Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:53.358Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:53.360Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:54.447Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:54.448Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:55.432Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:55.432Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:56.367Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:56.368Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:57.553Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:57.554Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:58.603Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:58.604Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:20:59.563Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:20:59.564Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:00.637Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:00.638Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:01.818Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:01.819Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:02.964Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:02.964Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:04.181Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:04.182Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:05.203Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:05.204Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:06.412Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:06.413Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:07.524Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:07.525Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:08.618Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:08.619Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.
+2024-01-12T10:21:09.576Z  INFO 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Node 2 disconnected.
+2024-01-12T10:21:09.577Z  WARN 1 --- [ad | producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-1] Connection to node 2 (localhost/127.0.0.1:29092) could not be established. Broker may not be available.

@@ -53,6 +53,8 @@ services:
       ZOOKEEPER_SYNC_LIMIT: 2
     networks:
       - ecommerce
+    ports:
+      - 32181:32181
     
   kafka:
     image: confluentinc/cp-kafka:7.3.2
@@ -68,6 +70,8 @@ services:
       - ecommerce
     depends_on:
       - zookeper
+    ports:
+      - 29092:29092
 
 networks:
  ecommerce:
