@@ -45,6 +45,30 @@ services:
     networks:
       - ecommerce
 
+  zookeper:
+    image: confluentinc/cp-zookeeper:7.1.6
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+    networks:
+      - ecommerce
+    
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    environment:
+      # KAFKA_ZOOKEEPER_CONNECT: localhost:32181
+      KAFKA_ZOOKEEPER_CONNECT: zookeper:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092
+      KAFKA_BROKER_ID: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      CONFLUENT_SUPPORT_CUSTOMER_ID: c0
+      KAFKA_CONFLUENT_LICENSE: "ABC123XYZ737BVT"
+    networks:
+      - ecommerce
+    depends_on:
+      - zookeper
+
 networks:
  ecommerce:
   driver: bridge

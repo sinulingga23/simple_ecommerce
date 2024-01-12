@@ -81,6 +81,14 @@ public class TransactionServiceImpl implements TransactionService  {
                 product.setQtty(product.getQtty()-orderRequest.getQtty());
                 productRepository.save(product);
                 totalPayment  = totalPayment.add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
+
+
+                // Send an event to message broker
+                /*
+                    TOPIC: product-service:deduct-qty-product
+                    MESSAGE: ProductId, QTY
+                 */
+                
             }
 
 
