@@ -2,6 +2,7 @@ package app.sinulingga.transactionservice.service.impl;
 
 import app.sinulingga.transactionservice.definition.StatusPayment;
 import app.sinulingga.transactionservice.dto.AddOrderRequest;
+import app.sinulingga.transactionservice.dto.DeductQtyRequest;
 import app.sinulingga.transactionservice.dto.InquiryPaymentRequest;
 import app.sinulingga.transactionservice.dto.OrderRequest;
 import app.sinulingga.transactionservice.entity.*;
@@ -12,6 +13,7 @@ import app.sinulingga.transactionservice.repository.TransactionDetailRepository;
 import app.sinulingga.transactionservice.repository.TransactionRepository;
 import app.sinulingga.transactionservice.repository.UserRepository;
 import app.sinulingga.transactionservice.service.TransactionService;
+import app.sinulingga.transactionservice.thirdparty.APIProductService;
 import app.sinulingga.transactionservice.utility.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 @Service
 public class TransactionServiceImpl implements TransactionService  {
@@ -36,6 +41,9 @@ public class TransactionServiceImpl implements TransactionService  {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private APIProductService apiProductService;
 
     @Transactional
     @Override
@@ -70,18 +78,47 @@ public class TransactionServiceImpl implements TransactionService  {
                 mapProduct.put(product.getId().toString(), product);
             }
 
+//            CountDownLatch countDownLatch = new CountDownLatch(request.getOrders().size());
+//            final AtomicReference<BigDecimal> totalPayment = new AtomicReference<>(BigDecimal.ZERO);
+//            for (OrderRequest orderRequest : request.getOrders()) {
+//
+//                new Thread(() -> {
+//                    Product product = mapProduct.get(orderRequest.getProductId());
+//
+//                    if (product.getQtty().compareTo(orderRequest.getQtty()) < 0) {
+//                        throw new BadRequestException("Insufficient Qtty");
+//                    }
+//
+//                    totalPayment.updateAndGet(currentTotalPayment -> {
+//                        return currentTotalPayment.add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
+//                    });
+//
+//    //                product.setQtty(product.getQtty()-orderRequest.getQtty());
+//    //                productRepository.save(product);
+//    //                totalPayment = totalPayment.get().add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
+//
+//
+//                    countDownLatch.countDown();
+//                });
+//            countDownLatch.wait();
             BigDecimal totalPayment = BigDecimal.ZERO;
             for (OrderRequest orderRequest : request.getOrders()) {
+
                 Product product = mapProduct.get(orderRequest.getProductId());
 
                 if (product.getQtty().compareTo(orderRequest.getQtty()) < 0) {
                     throw new BadRequestException("Insufficient Qtty");
                 }
 
-                product.setQtty(product.getQtty()-orderRequest.getQtty());
-                productRepository.save(product);
+
+                DeductQtyRequest payload = new DeductQtyRequest();
+                payload.setQty(orderRequest.getQtty());
+                payload.setProductId(product.getId().toString());
+                apiProductService.APIDeductQty(payload);
+
                 totalPayment  = totalPayment.add(product.getPrice().multiply(BigDecimal.valueOf(orderRequest.getQtty())));
             }
+
 
 
             Transaction transaction = new Transaction();
